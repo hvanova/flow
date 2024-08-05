@@ -29,10 +29,8 @@ DELTA_TIME = FRAME_INTERVAL / FRAME_RATE
 
 def estimate_velocity(first_image, second_image, dt):
     """Find the relative shift between the two tiles."""
-    # Use structural similarity index as a weight for frame transaltion computation.
+    # Use structural similarity index as a weight for frame translation computation.
     sim, diff = structural_similarity(first_image, second_image, full=True)
-    if sim == 1:
-        print(sim)
     mask = np.ones_like(first_image).astype(bool)
     delta = feature.masked_register_translation(
         second_image, first_image, mask, overlap_ratio=3 / 10)
@@ -145,7 +143,7 @@ def smooth_kalman(vx, vy, weights):
     mn = mean(cos_sims)
 
     for i in range(1, len(vx)):
-        # Get magnitudes for vector between two images.
+        # Get magnitudes for vectors between two images.
         v1_mag = hypot(vx[i-1], vy[i-1])
         v2_mag = hypot(vx[i], vy[i])
 
